@@ -1,8 +1,8 @@
 # $File: //member/autrijus/Lingua-ZH-HanDetect/HanDetect.pm $ $Author: autrijus $
-# $Revision: #3 $ $Change: 6230 $ $DateTime: 2003/06/01 15:46:41 $
+# $Revision: #4 $ $Change: 6772 $ $DateTime: 2003/06/27 04:42:27 $
 
 package Lingua::ZH::HanDetect;
-$Lingua::ZH::HanDetect::VERSION = '0.03';
+$Lingua::ZH::HanDetect::VERSION = '0.04';
 
 use bytes;
 use strict;
@@ -16,22 +16,25 @@ Lingua::ZH::HanDetect - Guess Chinese text's variant and encoding
 
 =head1 VERSION
 
-This document describes version 0.03 of Lingua::ZH::HanDetect, released
-June 1, 2003.
+This document describes version 0.04 of Lingua::ZH::HanDetect, released
+June 27, 2003.
 
 =head1 SYNOPSIS
 
     use Lingua::ZH::HanDetect;
 
-    # $encoding is 'big5-hkscs', 'big5', 'gbk', 'euc-cn' or 'utf8'
-    # $variant  is 'traditional' or 'simplified'
-    my ($encoding, $variant) = han_detect($some_chinesetext);
+    # $encoding is 'big5-hkscs', 'big5', 'gbk', 'euc-cn', 'utf8' or ''
+    # $variant  is 'traditional', 'simplified' or ''
+    my ($encoding, $variant) = han_detect($some_chinese_text);
 
 =head1 DESCRIPTION
 
 B<Lingua::ZH::HanDetect> uses statistical measures to test a text
 string to see if it's in Traditional or Simplified Chinese, as well
 as which encoding it is in.
+
+If the string does not contain Chinese characters, both the encoding
+and variant values will be set to the empty string.
 
 This module is needed because the various encodings for Chinese text
 tend to occupy the similar byte ranges, rendering C<Encode::Guess>
@@ -54,10 +57,10 @@ sub han_detect {
 
     my $trad = delete($count{trad}) || 0;
     my $simp = delete($count{simp}) || 0;
-    my $encoding = (sort { $count{$b} <=> $count{$a} } keys %count)[0];
+    my $encoding = (sort { $count{$b} <=> $count{$a} } keys %count)[0] || '';
 
     return $encoding unless wantarray;
-    return($encoding, (($trad < $simp) ? 'simplified' : 'traditional'));
+    return($encoding, ($encoding ? (($trad < $simp) ? 'simplified' : 'traditional') : ''));
 }
 
 1;
