@@ -1,8 +1,8 @@
 # $File: //member/autrijus/Lingua-ZH-HanDetect/HanDetect.pm $ $Author: autrijus $
-# $Revision: #1 $ $Change: 3923 $ $DateTime: 2003/01/27 20:55:42 $
+# $Revision: #3 $ $Change: 6230 $ $DateTime: 2003/06/01 15:46:41 $
 
 package Lingua::ZH::HanDetect;
-$Lingua::ZH::HanDetect::VERSION = '0.01';
+$Lingua::ZH::HanDetect::VERSION = '0.03';
 
 use bytes;
 use strict;
@@ -14,11 +14,16 @@ use Exporter;
 
 Lingua::ZH::HanDetect - Guess Chinese text's variant and encoding
 
+=head1 VERSION
+
+This document describes version 0.03 of Lingua::ZH::HanDetect, released
+June 1, 2003.
+
 =head1 SYNOPSIS
 
     use Lingua::ZH::HanDetect;
 
-    # $encoding is 'big5-hkscs', 'big5', 'gbk' or 'euc-cn'
+    # $encoding is 'big5-hkscs', 'big5', 'gbk', 'euc-cn' or 'utf8'
     # $variant  is 'traditional' or 'simplified'
     my ($encoding, $variant) = han_detect($some_chinesetext);
 
@@ -47,12 +52,12 @@ sub han_detect {
 	$count{$_}++ for keys %$v;
     }
 
-    my $trad = delete($count{trad});
-    my $simp = delete($count{simp});
+    my $trad = delete($count{trad}) || 0;
+    my $simp = delete($count{simp}) || 0;
     my $encoding = (sort { $count{$b} <=> $count{$a} } keys %count)[0];
 
     return $encoding unless wantarray;
-    return((($trad < $simp) ? 'simplified' : 'traditional'), $encoding);
+    return($encoding, (($trad < $simp) ? 'simplified' : 'traditional'));
 }
 
 1;
@@ -103,7 +108,7 @@ while (my ($k, $v) = each %map) {
 
 =head1 SEE ALSO
 
-L<Text::HanDetect>
+L<Encode::HanDetect>
 
 =head1 AUTHORS
 

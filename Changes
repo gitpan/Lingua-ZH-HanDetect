@@ -1,4 +1,18 @@
 ____________________________________________________________________________
+[  6230] By: autrijus                              on 2003/06/01  15:46:41
+        Log: * This be 0.03.
+             * thanks for doggy for pointing out the failing tests.
+	   + META.yml
+	   ! HanDetect.pm t/1-basic.t
+____________________________________________________________________________
+[  6228] By: autrijus                              on 2003/06/01  15:36:58
+        Log: * 0.02.
+	   ! Changes MANIFEST SIGNATURE
+____________________________________________________________________________
+[  3924] By: autrijus                              on 2003/01/27  20:58:16
+        Log: * changes and signatures.
+	   + Changes SIGNATURE
+____________________________________________________________________________
 [  3923] By: autrijus                              on 2003/01/27  20:55:42
         Log: * 0.01, the first CPAN version of Lingua::ZH::HanDetect.
 	   + HanDetect.pm MANIFEST Makefile.PL README

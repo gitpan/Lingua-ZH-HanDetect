@@ -1,8 +1,9 @@
 Changes
-MANIFEST
+HanDetect.pm
 Makefile.PL
+MANIFEST
+META.yml			Module meta-data (added by MakeMaker)
 README
 SIGNATURE
-HanDetect.pm
 t/0-signature.t
 t/1-basic.t
